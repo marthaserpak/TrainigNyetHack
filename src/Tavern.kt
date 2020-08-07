@@ -1,12 +1,13 @@
 import  java.io.File
 
 const val NAME_OF_TAVERN = "Taernyl's Folly"
-val firstName = mutableListOf("Hanna", "Alex", "Elli")
-val lastName = listOf("Wellish", "Gamilton", "Verburg")
-val uniquePatrons = mutableSetOf<String>()
 val menuList = File("src/data/menu.txt")
     .readText()
     .split("\n")
+val firstName = mutableListOf("Hanna", "Alex", "Elli")
+val lastName = listOf("Wellish", "Gamilton", "Verburg")
+
+val uniquePatrons = mutableSetOf<String>()
 val patronGold = mutableMapOf<String, Double>()
 
 
@@ -17,13 +18,16 @@ fun main() {
         println("${index+1} : $data")
     }*/
 
-    (0..5).forEach {
+    // Заполняем множество сгенерироваными именами
+    (0..3).forEach {
         val first = firstName.shuffled().first()
         val last = lastName.shuffled().first()
         val name = "$first $last"
         uniquePatrons += name
     }
 
+    // Для каждого посетителя из списка uniquePatron добавляем по 6.0 монет и
+    // помещаем в ассоциативный массив
     uniquePatrons.forEach{
         patronGold[it] = 6.0
     }
@@ -35,6 +39,18 @@ fun main() {
         orderCount++
     }
 
+    displayPatronBalances()
+}
+
+fun performPurchase(price: Double, patron: String) {
+    val totalPurse = patronGold.getValue(patron)
+    patronGold[patron] = totalPurse - price
+}
+
+private fun displayPatronBalances() {
+    patronGold.forEach {patron, balance ->
+        println("$patron, balance: ${"%.2f".format(balance)}")
+    }
 }
 
 fun placeOrder(patron: String, menuData: String) {
@@ -44,6 +60,8 @@ fun placeOrder(patron: String, menuData: String) {
 
     val (type, name, price) = menuData.split(",")
     println("$patron ordered $name ($type) for $price.")
+
+    performPurchase(price.toDouble(), patron)
 
     if (name == "Dragon's Breath") {
         println("$patron exclaims ${toDragonSpeak("Ah, how delicious $name")}")
