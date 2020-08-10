@@ -1,6 +1,7 @@
 package com.bignerdranch.nyethack
 
 class Player {
+
     var name = "adler"
         get() = field.capitalize()
         private set(value) {
