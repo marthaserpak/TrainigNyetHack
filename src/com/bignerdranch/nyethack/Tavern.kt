@@ -1,3 +1,5 @@
+package com.bignerdranch.nyethack
+
 import  java.io.File
 
 //TODO(1): Создать таверну, создать меню таверны, считав файл меню в список и разделив на строки.
@@ -48,10 +50,10 @@ fun main() {
     performBalances()
 }
 
-//TODO(7): функция  placeOrder(patron: String, menuData: String), генерирующая заказы:
+//TODO(7): функция  com.bignerdranch.nyethack.` `.placeOrder(patron: String, menuData: String), генерирующая заказы:
 // 1) Извлечь имя трактирщика из названия таверны и вывести на печать разговор с посетителем
 // 2) При помощи деструктуризации разделить строку из меню на отдельные состовляющие
-// 3) Записать метод performPurchase(price: Double, patron: String)
+// 3) Записать метод com.bignerdranch.nyethack.` `.performPurchase(price: Double, patron: String)
 // 4) Вывести благодарность посетителя за выбранный им напиток
 fun placeOrder(patron: String, menuData: String) {
     val indexOfApostrophe = TAVERN_NAME.indexOf("\'")
@@ -69,8 +71,8 @@ fun placeOrder(patron: String, menuData: String) {
 }
 
 
-//TODO(8): Создать метод performPurchase(price: Double,  patron: String).
-// 1) Переменной totalPurse присваиваем результат полученного значения из patronGold
+//TODO(8): Создать метод com.bignerdranch.nyethack.` `.performPurchase(price: Double,  patron: String).
+// 1) Переменной totalPurse присваиваем результат полученного значения из com.bignerdranch.nyethack.` `.getPatronGold
 // 2) Теперь перебором каждому patron присваиваем остаток, то есть от всех денег у игрока отнимаем цену выбранного напитка
 private fun performPurchase(price: Double, patron: String) {
     val totalPurse = patronGold.getValue(patron)
