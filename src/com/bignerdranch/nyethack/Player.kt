@@ -1,16 +1,40 @@
 package com.bignerdranch.nyethack
 
-class Player {
+import java.io.File
+
+class Player(
+    _name: String, var healthPoints: Int = 100,
+    val isBlessed: Boolean,
+    private val isImmortal: Boolean
+) {
 
     var name = "adler"
-        get() = field.capitalize()
+        get() = "${field.capitalize()} of $hometown"
         private set(value) {
             field = value.trim()
         }
 
-    val healthPoints = 100
-    val isBlessed = true
-    private val isImmortal = true
+    val hometown by lazy { selectHometown() }
+
+    private fun selectHometown() = File("src/data/towns.txt")
+        .readText()
+        .split('\n')
+        .shuffled()
+        .first()
+
+    init {
+        require(healthPoints > 0, { "healthPoints must be greater than 0" })
+        require(name.isNotBlank(), { "Player must have a name." })
+    }
+
+    constructor(name: String) : this(
+        name,
+        healthPoints = 100,
+        isBlessed = true,
+        isImmortal = false
+    ) {
+        if (name.toLowerCase() == "kar") healthPoints = 40
+    }
 
     val race = "ali"
     val fraction = when (race) {
@@ -52,29 +76,27 @@ class Player {
         }
     }
 
-    /*fun castFireball(numFireballs: Int = 2) =
-        println("A glass of Fireball springs into existence. (x$numFireballs)")
-*/
-     //castFireball
-     fun castFireball(numFireballs: Int) {
-         val stupefyingResult = when (numFireballs) {
-             in 1..5 -> 10..19
-             in 6..8 -> 20..29
-             in 9..15 -> 30..39
-             in 16..20 -> 40..49
-             else -> 50
-         }
+    //castFireball
+    fun castFireball(numFireballs: Int) {
+        val stupefyingResult = when (numFireballs) {
+            in 1..5 -> 10..19
+            in 6..8 -> 20..29
+            in 9..15 -> 30..39
+            in 16..20 -> 40..49
+            else -> 50
+        }
 
-         val condition = when (stupefyingResult) {
-             in 1..10 -> "Tipsy"
-             in 11..20 -> "Sloshed"
-             in 21..30 -> "Soused"
-             in 31..40 -> "Stewed"
-             else -> "..t0aSt3d"
-         }
+        val condition = when (stupefyingResult) {
+            in 1..10 -> "Tipsy"
+            in 11..20 -> "Sloshed"
+            in 21..30 -> "Soused"
+            in 31..40 -> "Stewed"
+            else -> "..t0aSt3d"
+        }
 
-         println("A glass of Fireball springs into existence. " +
-            "$name stupefied on $stupefyingResult%, he " +
+        println(
+            "A glass of Fireball springs into existence. " +
+                    "$name stupefied on $stupefyingResult%, he " +
                     "drunk x$numFireballs fireballs. \nHis condition $condition."
         )
     }
