@@ -97,7 +97,8 @@ class Player(
         println(
             "A glass of Fireball springs into existence. " +
                     "$name stupefied on $stupefyingResult%, he " +
-                    "drunk x$numFireballs fireballs. \nHis condition $condition."
+                    "drunk x$numFireballs fireballs." +
+                    "\nHis condition $condition."
         )
     }
 
