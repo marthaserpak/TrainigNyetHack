@@ -1,5 +1,6 @@
 package com.bignerdranch.nyethack
 
+import Coordinate
 import java.io.File
 
 class Player(
@@ -15,6 +16,9 @@ class Player(
         }
 
     val hometown by lazy { selectHometown() }
+
+    //переменная дабы отслеживать позицию игрока
+    var currentPosition = Coordinate(0,0)
 
     private fun selectHometown() = File("src/data/towns.txt")
         .readText()
